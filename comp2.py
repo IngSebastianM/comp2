@@ -40,9 +40,9 @@ def tokenize(code):
     return tokens
 
 class CodeGenerator:
-    def __init__(self):
+    def __init__(self):  # Agregado el método constructor
         self.code = []
-        self.temp_counter = 0
+        self.temp_counter = 0  # Inicialización de temp_counter
 
     def generate_code(self, node):
         if isinstance(node, ast.Module):
@@ -85,14 +85,13 @@ class CodeGenerator:
             ast.Mult: '*',
             ast.Div: '/',
             ast.Mod: '%',
-            ast.Pow: '**'
+            ast.Pow: '**'  # Agregado símbolo para la operación de potenciación
         }
         return operator_mapping.get(type(operator), '')
 
     def new_temp(self):
         self.temp_counter += 1
         return f"t{self.temp_counter}"
-
 
 class SyntaxTreeVisualizer:
     def __init__(self, clear_texts_callback):
@@ -210,18 +209,11 @@ def main():
                 code_gen = CodeGenerator()
                 code_gen.generate_code(tree)
                 final_code = "\n".join(code_gen.code)
-                # Limpiar el área de salida antes de mostrar el nuevo resultado
-                text_output.delete("1.0", tk.END)
                 text_output.insert(tk.END, "\n\nCódigo generado en tres direcciones:\n" + final_code)
-                # Mostrar el resultado final de la operación
-                result = f"Resultado final: {code_gen.code[-1].split('=')[1].strip()}"
-                text_output.insert(tk.END, "\n" + result)
             except SyntaxError as e:
                 messagebox.showerror("Error de Sintaxis", f"Error de sintaxis: {e}")
         else:
             messagebox.showwarning("Advertencia", "Ingrese el código fuente antes de generar el código final.")
-
-
 
     def clear_texts():
         text_area.delete("1.0", tk.END)
